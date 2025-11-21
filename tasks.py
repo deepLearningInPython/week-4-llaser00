@@ -29,9 +29,10 @@ import numpy as np
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-tokens = [''.join(c for c in word if c.isalpha()).lower()
-          for word in text.split()
-          if ''.join(c for c in word if c.isalpha())]
+tokens = [
+    token if token.isalpha() else ''.join(char for char in token if char.isalpha())
+    for token in text.split()
+]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
@@ -47,9 +48,8 @@ print(tokens)
 # -----------------------------------------------
 def tokenize(string: str) -> list:
     tokens = [
-        ''.join(c for c in word if c.isalpha()).lower()
-        for word in string.split()
-        if ''.join(c for c in word if c.isalpha())
+        token.lower() if token.isalpha() else ''.join(char for char in token.lower() if char.isalpha())
+        for token in string.split()
     ]
     return sorted(set(tokens))
 
@@ -96,9 +96,10 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    tokens = [''.join(c for c in word if c.isalpha()).lower()
-          for word in string.split()
-          if ''.join(c for c in word if c.isalpha())]
+    tokens = [
+        token.lower() if token.isalpha() else ''.join(char for char in token if char.isalpha())
+        for token in text.split()
+    ]
     word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) > k}
     return word_frequencies
 
@@ -131,8 +132,9 @@ all(text_hist[key] == value for key, value in token_counts(text).items())
 
 # Your code here:
 # -----------------------------------------------
-token_to_id = _ # Your code here
-
+token_to_id = {
+    token: idx for idx, token in enumerate(set(tokens))
+}
 # Expected output: {'dog': 0, 'quick': 1, 'fox': 2, 'the': 3, 'over': 4, 'lazy': 5, 'brown': 6, 'jumps': 7}
 print(token_to_id)
 # -----------------------------------------------
@@ -143,7 +145,9 @@ print(token_to_id)
 #
 # Your code here:
 # -----------------------------------------------
-id_to_token = _ # Your code here
+id_to_token = {
+    idx: token for idx, token in enumerate(set(tokens))
+}
 
 # tests: 
 # test 1
