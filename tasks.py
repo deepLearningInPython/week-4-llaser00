@@ -100,7 +100,7 @@ def token_counts(string: str, k: int = 1) -> dict:
         token.lower() if token.isalpha() else ''.join(char for char in token if char.isalpha())
         for token in text.split()
     ]
-    word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) > k}
+    word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) >= k}
     return word_frequencies
 
 # test:
@@ -168,8 +168,7 @@ assert all(id_to_token[token_to_id[key]]==key for key in token_to_id) and all(to
 # Your code here:
 # -----------------------------------------------
 def make_vocabulary_map(documents: list) -> tuple:
-    # Hint: use your tokenize function
-    pass # Your code
+    tokenize(documents)
 
 # Test
 t2i, i2t = make_vocabulary_map([text])
