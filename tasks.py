@@ -1,5 +1,4 @@
 import numpy as np
-#hi
 
 # Follow the tasks below to practice basic Python concepts.
 # Write your code in between the dashed lines.
@@ -30,8 +29,9 @@ import numpy as np
 text = "The quick brown fox jumps over the lazy dog!"
 
 # Write a list comprehension to tokenize the text and remove punctuation
-clean = ''.join([char for char in text if char not in string.punctuation])
-tokens = [clean.split() for word in clean]
+tokens = [''.join(c for c in word if c.isalpha())
+          for word in text.split()
+          if ''.join(c for c in word if c.isalpha())]
 
 # Expected output: ['The', 'quick', 'brown', 'fox', 'jumps', 'over', 'the', 'lazy', 'dog']
 print(tokens)
@@ -47,11 +47,14 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    pass # Your code
-
+    tokens = [
+        ''.join(c for c in word if c.isalpha()).lower()
+        for word in string.split()
+        if ''.join(c for c in word if c.isalpha())
+    ]
+    return sorted(set(tokens))
 
 # -----------------------------------------------
-
 
 
 # [B] Dictionary Comprehensions: Frequency Count of Tokens
