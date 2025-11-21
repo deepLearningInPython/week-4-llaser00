@@ -97,6 +97,7 @@ print(word_frequencies)
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) > k}
+    return word_frequencies
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
