@@ -96,8 +96,10 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    tokens = tokenize(string)
-    word_frequencies = {c: tokens.count(c) for c in tokens(string) if tokens.count(c) > k}
+    tokens = [''.join(c for c in word if c.isalpha()).lower()
+          for word in string.split()
+          if ''.join(c for c in word if c.isalpha())]
+    word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) > k}
     return word_frequencies
 
 # test:
