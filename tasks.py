@@ -96,7 +96,7 @@ print(word_frequencies)
 # Your code here:
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
-    word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) > k}
+    word_frequencies = {c: string.count(c) for c in set(string) if string.count(c) > k}
     return word_frequencies
 
 # test:
