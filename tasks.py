@@ -198,8 +198,12 @@ print(all(i2t[t2i[tok]] == tok for tok in t2i)) # should be True
 # Your code here:
 # -----------------------------------------------
 def tokenize_and_encode(documents: list) -> list:
-    # Hint: use your make_vocabulary_map and tokenize function
-    pass # Your code
+    (token2int, int2token) = make_vocabulary_map(documents)
+    encoded_list = []
+    for doc in documents:
+        token_ids = [token2int[token] for token in tokenize(doc) if token in token2int]
+        encoded_list.append(token_ids)
+    return encoded_list, token2int, int2token
 
 # Test:
 enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
@@ -225,7 +229,7 @@ enc, t2i, i2t = tokenize_and_encode([text, 'What a luck we had today!'])
 
 # Your code here:
 # -----------------------------------------------
-sigmoid = _ # Your code
+sigmoid = np.exp
 
 # Test:
 np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
@@ -300,7 +304,20 @@ np.all(sigmoid(np.log([1, 1/3, 1/7])) == np.array([1/2, 1/4, 1/8]))
 # Your code here:
 # -----------------------------------------------
 def rnn_layer(w: np.array, list_of_sequences: list[np.array], sigma=sigmoid ) -> np.array:
-    pass # Your code
+    W = np.array(w[0:9]).reshape(3, 3)
+    U = np.array(w[9:18]).reshape(3, 3)
+    B = np.array(w[18:21]).reshape(1, 3)
+
+    nr_sequences = len(list_of_sequences)
+    outputs = np.zeros(nr_sequences)
+
+    for i in range(nr_sequences):
+        X = list_of_sequences[i]
+        a = np.zeros_like(X[0])
+        for j in range(X.shape[0]):
+            a = W @ X[j,] + U @ a
+        outputs[i] = (B @ a).item()
+    return outputs
 
 # Test
 np.random.seed(10)
@@ -334,8 +351,9 @@ o.shape == (100,) and o.mean().round(3) == 16.287 and o.std().astype(int) == 133
 
 # Your code here:
 # -----------------------------------------------
-def rnn_loss(w: np.array, wi, list_of_sequences: list[np.array], y: np.array) -> np.float64:
-    pass # Your code
+def rnn_loss(w: np.array, list_of_sequences: list[np.array], y: np.array) -> np.float64:
+    pred = rnn_layer(w, list_of_sequences)
+    return sum((y-pred)**2)
 
 # Test:
 y = np.array([(X @ np.arange(1,4))[0] for X in list_of_sequences])
