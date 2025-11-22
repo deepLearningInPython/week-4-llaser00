@@ -47,11 +47,15 @@ print(tokens)
 # Your code here:
 # -----------------------------------------------
 def tokenize(string: str) -> list:
-    tokens = [
-        token.lower() if token.isalpha() else ''.join(char for char in token.lower() if char.isalpha())
-        for token in string.split()
-    ]
+    tokens = []
+    for word in string.split():
+        cleaned = ''.join(c for c in word.lower() if c.isalpha())
+        if cleaned:
+            tokens.append(cleaned)
     return sorted(set(tokens))
+
+
+print(tokenize("The quick brown fox jumps over the lazy dog!"))
 
 # -----------------------------------------------
 
