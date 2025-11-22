@@ -97,10 +97,17 @@ print(word_frequencies)
 # -----------------------------------------------
 def token_counts(string: str, k: int = 1) -> dict:
     tokens = [
-        token() if token.isalpha() else ''.join(char for char in token if char.isalpha())
-        for token in string.split()
+        ''.join(char for char in word.lower() if char.isalpha())
+        for word in string.split()
+        if ''.join(char for char in word.lower() if char.isalpha())
     ]
-    word_frequencies = {c: tokens.count(c) for c in set(tokens) if tokens.count(c) >= k}
+    
+    word_frequencies = {
+        t: tokens.count(t)
+        for t in set(tokens)
+        if tokens.count(t) > k
+    }
+    
     return word_frequencies
 
 # test:
