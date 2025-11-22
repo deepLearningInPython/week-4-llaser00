@@ -106,7 +106,7 @@ def token_counts(string: str, k: int = 1) -> dict:
         if ''.join(c for c in word.lower() if c.isalpha())
     ]
     
-    return {t: tokens.count(t) for t in set(tokens) if tokens.count(t) > k}
+    return {t: tokens.count(t) for t in set(tokens) if tokens.count(t) >= k}
 
 # test:
 text_hist = {'the': 2, 'quick': 1, 'brown': 1, 'fox': 1, 'jumps': 1, 'over': 1, 'lazy': 1, 'dog': 1}
